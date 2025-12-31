@@ -1,0 +1,191 @@
+{%- style -%}
+  .velocity-author {
+    padding: 10rem 0;
+    background-color: #fff;
+  }
+
+  .velocity-author__wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8rem;
+    flex-direction: {% if section.settings.image_position == 'right' %}row{% else %}row-reverse{% endif %};
+  }
+
+  @media screen and (max-width: 989px) {
+    .velocity-author__wrapper {
+      flex-direction: column-reverse;
+      gap: 5rem;
+    }
+  }
+
+  .velocity-author__content {
+    flex: 1;
+  }
+
+  .velocity-author__image-wrapper {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+
+  .velocity-author__image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 2rem;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.1);
+    transition: var(--ag-transition);
+  }
+
+  .velocity-author__image:hover {
+    transform: scale(1.02) rotate(1deg);
+  }
+
+  .velocity-author__title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    line-height: 1;
+    margin-bottom: 2.5rem;
+    text-transform: uppercase;
+  }
+
+  .velocity-author__bio {
+    font-size: 1.8rem;
+    line-height: 1.6;
+    color: #444;
+    margin-bottom: 4rem;
+  }
+
+  .velocity-author__bio p {
+    margin-bottom: 2rem;
+  }
+
+  .velocity-author__footer {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .velocity-author__logos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    align-items: center;
+    opacity: 0.6;
+    margin-top: 2rem;
+  }
+
+  .velocity-author__logo {
+    max-height: 3rem;
+    width: auto;
+  }
+{%- endstyle -%}
+
+<section class="velocity-author">
+  <div class="page-width">
+    <div class="velocity-author__wrapper">
+      <div class="velocity-author__content reveal">
+        <h2 class="velocity-author__title">{{ section.settings.title }}</h2>
+        <div class="velocity-author__bio">
+          {{ section.settings.bio }}
+        </div>
+        
+        <div class="velocity-author__footer">
+          {%- if section.settings.button_label != blank -%}
+            <a href="{{ section.settings.button_link }}" class="button--ag-velocity" style="min-width: 250px;">
+              {{ section.settings.button_label }}
+            </a>
+          {%- endif -%}
+
+          {%- if section.blocks.size > 0 -%}
+            <div class="velocity-author__logos">
+              {%- for block in section.blocks -%}
+                {%- if block.settings.logo != blank -%}
+                  {{ block.settings.logo | image_url: height: 60 | image_tag: class: 'velocity-author__logo', loading: 'lazy' }}
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="velocity-author__image-wrapper reveal">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 1000 | image_tag: class: 'velocity-author__image', loading: 'lazy' }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'velocity-author__image placeholder-svg' }}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Velocity Author Bio",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "ABOUT AT ACQUISITION.COM"
+    },
+    {
+      "type": "richtext",
+      "id": "bio",
+      "label": "Biography",
+      "default": "<p>We share the best of what we learn from business owners to help you scale your business to $100M and beyond.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Author Image"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image Position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Work with us"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Trust Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Velocity Author Bio",
+      "blocks": [
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,144 @@
+{%- style -%}
+  .velocity-social-proof {
+    padding: 4rem 0;
+    background-color: #f4f4f4;
+    overflow: hidden;
+  }
+
+  .velocity-social-proof__title {
+    text-align: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    color: #999;
+    margin-bottom: 3rem;
+  }
+
+  .velocity-ticker {
+    display: flex;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .velocity-ticker__track {
+    display: flex;
+    align-items: center;
+    gap: 8rem;
+    animation: velocityTicker 30s linear infinite;
+  }
+
+  .velocity-ticker__item {
+    flex-shrink: 0;
+    max-height: 4rem;
+    width: auto;
+    filter: grayscale(100%) opacity(0.5);
+    transition: var(--ag-transition);
+  }
+
+  .velocity-ticker__item:hover {
+    filter: grayscale(0%) opacity(1);
+    transform: scale(1.1);
+  }
+
+  @keyframes velocityTicker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .velocity-social-proof--grid .velocity-social-proof__container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 5rem;
+  }
+
+  .velocity-social-proof--grid .velocity-ticker__item {
+     animation: none;
+  }
+{%- endstyle -%}
+
+<section class="velocity-social-proof {% if section.settings.layout == 'grid' %}velocity-social-proof--grid{% endif %}">
+  <div class="page-width">
+    {%- if section.settings.title != blank -%}
+      <h3 class="velocity-social-proof__title reveal">{{ section.settings.title }}</h3>
+    {%- endif -%}
+
+    {%- if section.settings.layout == 'ticker' -%}
+      <div class="velocity-ticker reveal">
+        <div class="velocity-ticker__track">
+          {%- for block in section.blocks -%}
+            {%- if block.settings.logo != blank -%}
+              {{ block.settings.logo | image_url: height: 80 | image_tag: class: 'velocity-ticker__item', loading: 'lazy' }}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- for block in section.blocks -%}
+            {%- if block.settings.logo != blank -%}
+              {{ block.settings.logo | image_url: height: 80 | image_tag: class: 'velocity-ticker__item', loading: 'lazy' }}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- else -%}
+      <div class="velocity-social-proof__container reveal">
+        {%- for block in section.blocks -%}
+          {%- if block.settings.logo != blank -%}
+            {{ block.settings.logo | image_url: height: 80 | image_tag: class: 'velocity-ticker__item', loading: 'lazy' }}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Velocity Social Proof",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "AS SEEN ON"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "ticker", "label": "Scrolling Ticker" },
+        { "value": "grid", "label": "Static Grid" }
+      ],
+      "default": "ticker"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Velocity Social Proof",
+      "blocks": [
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" }
+      ]
+    }
+  ]
+}
+{% endschema %}

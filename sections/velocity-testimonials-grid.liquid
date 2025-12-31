@@ -1,0 +1,189 @@
+{%- style -%}
+  .velocity-testimonials {
+    padding: 8rem 0;
+    background-color: #f9f9f9;
+  }
+
+  .velocity-testimonials__header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 5rem;
+  }
+
+  .velocity-testimonials__title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+
+  .velocity-testimonials__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    padding: 0 2rem;
+  }
+
+  .velocity-testimonial-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 1.5rem;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: var(--ag-transition);
+  }
+
+  .velocity-testimonial-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+  }
+
+  .velocity-testimonial__stars {
+    color: #ffb400;
+    font-size: 1.6rem;
+    margin-bottom: 2rem;
+  }
+
+  .velocity-testimonial__text {
+    font-size: 1.6rem;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    font-style: italic;
+    color: #444;
+  }
+
+  .velocity-testimonial__author {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .velocity-testimonial__image {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .velocity-testimonial__name {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+  }
+
+  .velocity-testimonials__footer {
+    text-align: center;
+    margin-top: 5rem;
+  }
+{%- endstyle -%}
+
+<section class="velocity-testimonials">
+  <div class="page-width">
+    {%- if section.settings.title != blank -%}
+      <div class="velocity-testimonials__header reveal">
+        <h2 class="velocity-testimonials__title">{{ section.settings.title }}</h2>
+      </div>
+    {%- endif -%}
+
+    <div class="velocity-testimonials__grid">
+      {%- for block in section.blocks -%}
+        <div class="velocity-testimonial-card reveal" {{ block.shopify_attributes }}>
+          <div class="velocity-testimonial__stars">
+            {%- for i in (1..5) -%}
+              ★
+            {%- endfor -%}
+          </div>
+          <div class="velocity-testimonial__text">
+            "{{ block.settings.text }}"
+          </div>
+          <div class="velocity-testimonial__author">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 120, height: 120 | image_tag: class: 'velocity-testimonial__image', loading: 'lazy' }}
+            {%- else -%}
+              <div class="velocity-testimonial__image" style="background: #eee;"></div>
+            {%- endif -%}
+            <span class="velocity-testimonial__name">{{ block.settings.author }}</span>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.button_label != blank -%}
+      <div class="velocity-testimonials__footer reveal">
+        <a href="{{ section.settings.button_link }}" class="button--ag-velocity" style="min-width: 250px;">
+          {{ section.settings.button_label }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Velocity Testimonials",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "What Entrepreneurs Say About 100M Leads"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Get Started Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Testimonial Text",
+          "default": "This book completely changed how I think about marketing. A must-read for any business owner."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author Name",
+          "default": "John Doe"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Author Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Velocity Testimonials",
+      "blocks": [
+        { "type": "testimonial" },
+        { "type": "testimonial" },
+        { "type": "testimonial" }
+      ]
+    }
+  ]
+}
+{% endschema %}

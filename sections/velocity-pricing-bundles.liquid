@@ -1,0 +1,281 @@
+{%- style -%}
+  .velocity-pricing {
+    padding: 10rem 0;
+    background: #fff;
+  }
+
+  .velocity-pricing__header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 6rem;
+  }
+
+  .velocity-pricing__subtitle {
+    font-family: 'Outfit', sans-serif;
+    color: var(--ag-accent-color);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    display: block;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+  }
+
+  .velocity-pricing__title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 1;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+
+  .velocity-pricing__grid {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2.5rem;
+  }
+
+  @media screen and (max-width: 989px) {
+    .velocity-pricing__grid {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  .velocity-pricing-card {
+    flex: 1;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 2rem;
+    padding: 4rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: var(--ag-transition);
+    max-width: 400px;
+    width: 100%;
+  }
+
+  .velocity-pricing-card--popular {
+    border: 2px solid var(--ag-accent-color);
+    transform: scale(1.05);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+  }
+
+  @media screen and (max-width: 989px) {
+    .velocity-pricing-card--popular {
+      transform: none;
+    }
+  }
+
+  .velocity-pricing-card__badge {
+    position: absolute;
+    top: -1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ag-accent-color);
+    color: #fff;
+    padding: 0.5rem 2rem;
+    border-radius: 2rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+  }
+
+  .velocity-pricing-card__title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  .velocity-pricing-card__price {
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: 3rem;
+    color: var(--ag-primary-color);
+  }
+
+  .velocity-pricing-card__price span {
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: #666;
+  }
+
+  .velocity-pricing-card__features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 4rem;
+    flex-grow: 1;
+  }
+
+  .velocity-pricing-card__feature {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    color: #444;
+  }
+
+  .velocity-pricing-card__feature svg {
+    width: 1.8rem;
+    height: 1.8rem;
+    fill: var(--ag-accent-color);
+    flex-shrink: 0;
+  }
+{%- endstyle -%}
+
+<section class="velocity-pricing">
+  <div class="page-width">
+    <div class="velocity-pricing__header reveal">
+      {%- if section.settings.subtitle != blank -%}
+        <span class="velocity-pricing__subtitle">{{ section.settings.subtitle }}</span>
+      {%- endif -%}
+      <h2 class="velocity-pricing__title">{{ section.settings.title }}</h2>
+      {%- if section.settings.text != blank -%}
+        <div class="velocity-pricing__text">{{ section.settings.text }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="velocity-pricing__grid">
+      {%- for block in section.blocks -%}
+        <div class="velocity-pricing-card {% if block.settings.is_popular %}velocity-pricing-card--popular{% endif %} reveal" {{ block.shopify_attributes }}>
+          {%- if block.settings.is_popular -%}
+            <span class="velocity-pricing-card__badge">{{ section.settings.popular_label }}</span>
+          {%- endif -%}
+
+          <h3 class="velocity-pricing-card__title">{{ block.settings.title }}</h3>
+          <div class="velocity-pricing-card__price">
+            {{ block.settings.price }}
+            <span>{{ block.settings.price_suffix }}</span>
+          </div>
+
+          <ul class="velocity-pricing-card__features">
+            {%- assign features = block.settings.features | newline_to_br | split: '<br />' -%}
+            {%- for feature in features -%}
+              {%- if feature != blank -%}
+                <li class="velocity-pricing-card__feature">
+                  <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                  {{ feature | strip }}
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+
+          <a href="{{ block.settings.button_link }}" class="{% if block.settings.is_popular %}button--ag-velocity{% else %}button button--secondary{% endif %}" style="width: 100%;">
+            {{ block.settings.button_label }}
+          </a>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Velocity Pricing Bundles",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Sub-heading",
+      "default": "PRICING OPTIONS"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "CHOOSE YOUR LEVEL"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Description",
+      "default": "<p>Select the bundle that best fits your business goals.</p>"
+    },
+    {
+      "type": "text",
+      "id": "popular_label",
+      "label": "Popular Badge Label",
+      "default": "Most Popular"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "bundle",
+      "name": "Price Bundle",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "is_popular",
+          "label": "Highlight as Popular",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Bundle Title",
+          "default": "Basic Bundle"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price",
+          "default": "$99"
+        },
+        {
+          "type": "text",
+          "id": "price_suffix",
+          "label": "Price Suffix",
+          "default": "/ one-time"
+        },
+        {
+          "type": "textarea",
+          "id": "features",
+          "label": "Features (one per line)",
+          "default": "Feature 1\nFeature 2\nFeature 3"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label",
+          "default": "Buy Now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Velocity Pricing Bundles",
+      "blocks": [
+        {
+          "type": "bundle",
+          "settings": { "title": "Starter", "price": "$19" }
+        },
+        {
+          "type": "bundle",
+          "settings": { "title": "Professional", "price": "$49", "is_popular": true }
+        },
+        {
+          "type": "bundle",
+          "settings": { "title": "Agency", "price": "$99" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

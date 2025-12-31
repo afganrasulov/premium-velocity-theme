@@ -1,0 +1,212 @@
+{%- style -%}
+  .velocity-feature-list {
+    padding: 10rem 0;
+    overflow: hidden;
+  }
+
+  .velocity-feature-list__wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8rem;
+    flex-direction: {% if section.settings.image_position == 'right' %}row{% else %}row-reverse{% endif %};
+  }
+
+  @media screen and (max-width: 989px) {
+    .velocity-feature-list__wrapper {
+      flex-direction: column-reverse;
+      gap: 5rem;
+    }
+  }
+
+  .velocity-feature-list__content {
+    flex: 1;
+  }
+
+  .velocity-feature-list__image-wrapper {
+    flex: 1;
+    position: relative;
+  }
+
+  .velocity-feature-list__image-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    {% if section.settings.image_position == 'right' %}right{% else %}left{% endif %}: -10%;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle, var(--ag-accent-color) 0%, transparent 70%);
+    opacity: 0.1;
+    z-index: 0;
+    filter: blur(50px);
+  }
+
+  .velocity-feature-list__image {
+    width: 100%;
+    height: auto;
+    border-radius: 2rem;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+    position: relative;
+    z-index: 1;
+    transition: var(--ag-transition);
+  }
+
+  .velocity-feature-list__image:hover {
+    transform: scale(1.02);
+  }
+
+  .velocity-feature-list__subtitle {
+    font-family: 'Outfit', sans-serif;
+    color: var(--ag-accent-color);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    display: block;
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+  }
+
+  .velocity-feature-list__title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 1;
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+  }
+
+  .velocity-feature-list__items {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 4rem;
+  }
+
+  .velocity-feature-list__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    line-height: 1.5;
+  }
+
+  .velocity-feature-list__icon {
+    width: 2.4rem;
+    height: 2.4rem;
+    flex-shrink: 0;
+    margin-top: 0.3rem;
+  }
+
+  .velocity-feature-list__icon svg {
+    width: 100%;
+    height: 100%;
+    fill: var(--ag-accent-color);
+  }
+{%- endstyle -%}
+
+<section class="velocity-feature-list">
+  <div class="page-width">
+    <div class="velocity-feature-list__wrapper">
+      <div class="velocity-feature-list__content reveal">
+        {%- if section.settings.subtitle != blank -%}
+          <span class="velocity-feature-list__subtitle">{{ section.settings.subtitle }}</span>
+        {%- endif -%}
+        <h2 class="velocity-feature-list__title">{{ section.settings.title }}</h2>
+        
+        <ul class="velocity-feature-list__items">
+          {%- for block in section.blocks -%}
+            <li class="velocity-feature-list__item reveal" {{ block.shopify_attributes }}>
+              <span class="velocity-feature-list__icon">
+                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+              </span>
+              <span>{{ block.settings.text }}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+
+        {%- if section.settings.button_label != blank -%}
+          <a href="{{ section.settings.button_link }}" class="button--ag-velocity" style="min-width: 250px;">
+            {{ section.settings.button_label }}
+          </a>
+        {%- endif -%}
+      </div>
+
+      <div class="velocity-feature-list__image-wrapper reveal">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 1200 | image_tag: class: 'velocity-feature-list__image', loading: 'lazy' }}
+        {%- else -%}
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'velocity-feature-list__image placeholder-svg' }}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Velocity Feature List",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Sub-heading",
+      "default": "EVERYTHING YOU GET"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "WHY YOU NEED THIS BOOK TODAY"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Section Image"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image Position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Add to Cart"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Feature Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Item Text",
+          "default": "Master the art of high-volume lead generation."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Velocity Feature List",
+      "blocks": [
+        { "type": "item" },
+        { "type": "item" },
+        { "type": "item" },
+        { "type": "item" }
+      ]
+    }
+  ]
+}
+{% endschema %}
