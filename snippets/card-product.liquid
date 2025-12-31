@@ -140,6 +140,10 @@
                 {{- 'products.product.on_sale' | t -}}
               </span>
             {%- endif -%}
+            {%- if card_product.template_suffix == 'pre-order' or card_product.tags contains 'pre-order' -%}
+              <span class="badge badge--pre-order">Pre-order</span>
+            {%- endif -%}
+
           </div>
         </div>
       </div>
@@ -564,6 +568,10 @@
               {{- 'products.product.on_sale' | t -}}
             </span>
           {%- endif -%}
+          {%- if card_product.template_suffix == 'pre-order' or card_product.tags contains 'pre-order' -%}
+            <span class="badge badge--pre-order">Pre-order</span>
+          {%- endif -%}
+
         </div>
       </div>
     </div>

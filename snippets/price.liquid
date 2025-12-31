@@ -120,6 +120,13 @@
       <span class="badge price__badge-sold-out color-{{ settings.sold_out_badge_color_scheme }}">
         {{ 'products.product.sold_out' | t }}
       </span>
+
+      {%- if product.template_suffix == 'pre-order' or product.tags contains 'pre-order' -%}
+        <span class="badge badge--pre-order">
+          Pre-order
+        </span>
+      {%- endif -%}
     {%- endif -%}
+
   </div>
 {% endunless %}

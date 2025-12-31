@@ -90,3 +90,60 @@ h6 {
 .reveal {
   animation: fadeInUp 0.8s ease forwards;
 }
+
+/* Badges */
+.badge--pre-order {
+  background-color: var(--ag-accent-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+/* Pickup Availability */
+.pickup-availability-preview {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: var(--ag-secondary-color);
+  border-radius: var(--ag-border-radius);
+  border: 1px solid var(--ag-glass-border);
+  margin-top: 1.5rem;
+}
+
+.pickup-availability-preview [data-available="true"] {
+  color: #008060;
+}
+
+.pickup-availability-info p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.pickup-availability-button {
+  font-size: 0.8rem;
+  color: var(--ag-accent-color);
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-top: 0.5rem;
+}
+
+/* Quick Add Modal Premium Look */
+.quick-add-modal__content {
+  border-radius: 24px !important;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.quick-add-modal__toggle {
+  top: 1.5rem !important;
+  right: 1.5rem !important;
+}
