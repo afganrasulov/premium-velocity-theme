@@ -1,0 +1,108 @@
+{%- style -%}
+  .hero-velocity {
+    position: relative;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: var(--ag-primary-color);
+    color: #ffffff;
+  }
+
+  .hero-velocity__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    opacity: 0.6;
+    transition: var(--ag-transition);
+  }
+
+  .hero-velocity:hover .hero-velocity__image {
+    transform: scale(1.05);
+  }
+
+  .hero-velocity__content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+    padding: 2rem;
+  }
+
+  .hero-velocity__title {
+    font-size: clamp(3rem, 8vw, 6rem);
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    line-height: 0.9;
+  }
+
+  .hero-velocity__text {
+    font-size: 1.8rem;
+    margin-bottom: 2.5rem;
+    opacity: 0.9;
+  }
+{%- endstyle -%}
+
+<section class="hero-velocity">
+  {%- if section.settings.image != blank -%}
+    {{ section.settings.image | image_url: width: 2000 | image_tag: class: 'hero-velocity__image', loading: 'lazy' }}
+  {%- else -%}
+    {{ 'lifestyle-1' | placeholder_svg_tag: 'hero-velocity__image placeholder-svg' }}
+  {%- endif -%}
+
+  <div class="hero-velocity__content reveal">
+    <h1 class="hero-velocity__title">{{ section.settings.title }}</h1>
+    <div class="hero-velocity__text">{{ section.settings.text }}</div>
+    {%- if section.settings.button_label != blank -%}
+      <a href="{{ section.settings.button_link }}" class="button--ag-velocity">
+        {{ section.settings.button_label }}
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Velocity Hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Premium Experience"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Description",
+      "default": "<p>Discover our new collection with high velocity and premium design.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Velocity Hero"
+    }
+  ]
+}
+{% endschema %}

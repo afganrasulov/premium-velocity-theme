@@ -1,0 +1,1 @@
+/Users/kent/.gemini/antigravity/playground/prograde-armstrong/premium-impact-clone/AGENTS.md
