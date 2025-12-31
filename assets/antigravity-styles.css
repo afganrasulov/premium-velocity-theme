@@ -91,6 +91,40 @@ h6 {
   animation: fadeInUp 0.8s ease forwards;
 }
 
+/* Facets (Filters) Premium Styles */
+.facets-container {
+  padding: 2rem 0;
+}
+
+.facets__summary {
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ag-text-color);
+  transition: var(--ag-transition);
+}
+
+.facets__display {
+  background: var(--ag-glass-bg) !important;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid var(--ag-glass-border) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1) !important;
+  top: calc(100% + 1rem) !important;
+}
+
+.mobile-facets__inner {
+  background: var(--ag-bg-color) !important;
+  border-left: 1px solid var(--ag-glass-border) !important;
+}
+
+.mobile-facets__header {
+  background: var(--ag-secondary-color) !important;
+}
+
+
 /* Badges */
 .badge--pre-order {
   background-color: var(--ag-accent-color);
