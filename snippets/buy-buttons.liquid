@@ -88,8 +88,13 @@
               {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
                 {{ 'products.product.sold_out' | t }}
               {%- else -%}
-                {{ 'products.product.add_to_cart' | t }}
+                {%- if product.template_suffix == 'pre-order' or product.tags contains 'pre-order' -%}
+                  Pre-order
+                {%- else -%}
+                  {{ 'products.product.add_to_cart' | t }}
+                {%- endif -%}
               {%- endif -%}
+
             </span>
             {%- render 'loading-spinner' -%}
           </button>

@@ -315,6 +315,11 @@
       {{ content_for_layout }}
     </main>
 
+    {%- if template.name == 'product' -%}
+      {% render 'sticky-cart-velocity' %}
+    {%- endif -%}
+
+
     {% sections 'footer-group' %}
 
     <ul hidden>

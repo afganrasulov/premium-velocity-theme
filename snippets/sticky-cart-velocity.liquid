@@ -1,0 +1,85 @@
+{%- style -%}
+  .sticky-cart-bar {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: var(--ag-glass-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--ag-glass-border);
+    padding: 1rem 1.5rem;
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    transform: translateY(150%);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .sticky-cart-bar.is-visible {
+    transform: translateY(0);
+  }
+
+  .sticky-cart-bar__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .sticky-cart-bar__title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--ag-text-color);
+  }
+
+  .sticky-cart-bar__price {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--ag-accent-color);
+  }
+
+  .sticky-cart-bar button {
+    padding: 0.8rem 2rem;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    letter-spacing: 0.05em;
+  }
+
+  @media screen and (max-width: 749px) {
+    .sticky-cart-bar {
+      bottom: 1.5rem;
+      left: 1rem;
+      right: 1rem;
+      justify-content: space-between;
+      border-radius: 12px;
+    }
+  }
+{%- endstyle -%}
+
+<div id="StickyCart" class="sticky-cart-bar reveal" data-sticky-cart>
+  <div class="sticky-cart-bar__content">
+    <p class="sticky-cart-bar__title">{{ product.title | truncate: 30 }}</p>
+    <span class="sticky-cart-bar__price">{{ product.selected_or_first_available_variant.price | money }}</span>
+  </div>
+  <button type="button" class="button--ag-velocity" onclick="document.querySelector('product-form form')?.submit()">
+    {{ 'products.product.add_to_cart' | t }}
+  </button>
+</div>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const addToCartBtn = document.querySelector('.product-form__buttons');
+    const stickyBar = document.getElementById('StickyCart');
+    if (addToCartBtn && stickyBar) {
+      const rect = addToCartBtn.getBoundingClientRect();
+      if (rect.bottom < 0) {
+        stickyBar.classList.add('is-visible');
+      } else {
+        stickyBar.classList.remove('is-visible');
+      }
+    }
+  }, { passive: true });
+</script>
