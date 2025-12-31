@@ -21,6 +21,15 @@
 
 .collection-hero__text-wrapper {
   flex-basis: 100%;
+  padding: 4rem 2rem;
+  background: var(--ag-glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--ag-glass-border);
+  border-radius: 16px;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
 }
 
 @media screen and (min-width: 750px) {
@@ -36,10 +45,14 @@
 }
 
 .collection-hero__title {
-  margin: 2.5rem 0;
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ag-primary-color);
 }
 
-.collection-hero__title + .collection-hero__description {
+.collection-hero__title+.collection-hero__description {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
   font-size: 1.6rem;
@@ -47,18 +60,20 @@
 }
 
 @media screen and (min-width: 750px) {
-  .collection-hero__title + .collection-hero__description {
+  .collection-hero__title+.collection-hero__description {
     font-size: 1.8rem;
     margin-top: 2rem;
     margin-bottom: 2rem;
   }
 
   .collection-hero__description {
-    max-width: 66.67%;
+    max-width: 600px;
+    opacity: 0.9;
+    color: var(--ag-text-color);
   }
 
   .collection-hero--with-image .collection-hero__description {
-    max-width: 100%;
+    max-width: 600px;
   }
 }
 
@@ -73,8 +88,7 @@
 .collection-hero__image-container {
   border: var(--media-border-width) solid rgba(var(--color-foreground), var(--media-border-opacity));
   border-radius: var(--media-radius);
-  box-shadow: var(--media-shadow-horizontal-offset) var(--media-shadow-vertical-offset) var(--media-shadow-blur-radius)
-    rgba(var(--color-shadow), var(--media-shadow-opacity));
+  box-shadow: var(--media-shadow-horizontal-offset) var(--media-shadow-vertical-offset) var(--media-shadow-blur-radius) rgba(var(--color-shadow), var(--media-shadow-opacity));
 }
 
 @media screen and (max-width: 749px) {
@@ -92,7 +106,10 @@
   .collection-hero__image-container {
     align-self: stretch;
     flex: 1 0 50%;
-    margin-left: 3rem;
-    min-height: 20rem;
+    margin-left: -4rem;
+    min-height: 40rem;
+    border-radius: 24px;
+    overflow: hidden;
+    z-index: 1;
   }
 }
